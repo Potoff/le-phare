@@ -1,0 +1,23 @@
+/* ==========================================================================
+   LE DERNIER PHARE - Board Stylesheet
+   Canvas-specific styling and board overlays
+   ========================================================================== */
+
+#game-canvas {
+  display: block;
+  image-rendering: auto;
+  cursor: grab;
+}
+
+#game-canvas:active {
+  cursor: grabbing;
+}
+
+/* Board container background for the abyss beneath the map */
+#board-container {
+  background: radial-gradient(
+    ellipse at center,
+    var(--bg-dark) 0%,
+    var(--bg-deepest) 70%
+  );
+}

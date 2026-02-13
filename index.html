@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Dernier Phare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/board.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/dialogue.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <link rel="stylesheet" href="css/title.css">
+</head>
+<body>
+    <!-- Ecran titre -->
+    <div id="title-screen">
+        <div class="title-fog"></div>
+        <div class="title-content">
+            <h1 class="title-main">Le Dernier Phare</h1>
+            <p class="title-subtitle">Quelque chose dort sous les vagues...</p>
+            <div class="title-menu">
+                <button class="title-btn" id="btn-new-game">Nouvelle Partie</button>
+                <button class="title-btn" id="btn-continue" disabled>Continuer</button>
+            </div>
+        </div>
+        <div class="title-lighthouse"></div>
+    </div>
+
+    <!-- Jeu principal -->
+    <div id="game-container" class="hidden">
+        <!-- Couche atmospherique -->
+        <div class="fog-overlay"></div>
+        <div class="vignette-overlay"></div>
+
+        <!-- Barre superieure -->
+        <header id="top-bar">
+            <button id="btn-menu" class="icon-btn" title="Menu">&#9776;</button>
+            <div id="game-title">Le Dernier Phare</div>
+            <button id="btn-journal" class="icon-btn" title="Journal">&#9998;</button>
+        </header>
+
+        <!-- Zone de jeu principale -->
+        <main id="game-area">
+            <!-- Canvas du plateau -->
+            <div id="board-container">
+                <canvas id="game-canvas"></canvas>
+            </div>
+
+            <!-- Panneau lateral droit -->
+            <aside id="side-panel">
+                <div id="location-info" class="panel-section">
+                    <h3 id="location-name">Le Phare</h3>
+                    <p id="location-desc">Votre phare. Le faisceau perce le brouillard.</p>
+                </div>
+                <div id="npc-info" class="panel-section hidden">
+                    <div id="npc-portrait"></div>
+                    <h3 id="npc-name"></h3>
+                    <div id="npc-trust"></div>
+                </div>
+                <div id="actions-panel" class="panel-section">
+                    <h4>Actions</h4>
+                    <div id="action-buttons"></div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- HUD en bas -->
+        <footer id="hud">
+            <div class="resource-bar" id="oil-bar">
+                <span class="resource-icon" title="Huile">&#128367;</span>
+                <div class="resource-track">
+                    <div class="resource-fill" id="oil-fill"></div>
+                </div>
+                <span class="resource-value" id="oil-value">12</span>
+            </div>
+            <div class="resource-bar" id="food-bar">
+                <span class="resource-icon" title="Nourriture">&#127838;</span>
+                <div class="resource-track">
+                    <div class="resource-fill" id="food-fill"></div>
+                </div>
+                <span class="resource-value" id="food-value">8</span>
+            </div>
+            <div class="resource-bar" id="sanity-bar">
+                <span class="resource-icon" title="Sante mentale">&#128065;</span>
+                <div class="resource-track">
+                    <div class="resource-fill" id="sanity-fill"></div>
+                </div>
+                <span class="resource-value" id="sanity-value">100</span>
+            </div>
+            <div id="time-display">
+                <span id="day-display">Jour 1</span>
+                <span id="phase-display">Aube</span>
+                <span id="moves-display">Deplacements : 5</span>
+            </div>
+        </footer>
+
+        <!-- Boite de dialogue -->
+        <div id="dialogue-box" class="hidden">
+            <div id="dialogue-header">
+                <span id="dialogue-speaker"></span>
+            </div>
+            <div id="dialogue-text"></div>
+            <div id="dialogue-choices"></div>
+        </div>
+
+        <!-- Journal -->
+        <div id="journal-overlay" class="hidden">
+            <div id="journal-panel">
+                <div id="journal-header">
+                    <h2>Journal</h2>
+                    <button id="btn-close-journal" class="icon-btn">&times;</button>
+                </div>
+                <div id="journal-content">
+                    <div id="journal-clues"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notification-container"></div>
+
+        <!-- Transition de phase -->
+        <div id="phase-transition" class="hidden">
+            <div id="phase-transition-text"></div>
+        </div>
+
+        <!-- Menu pause -->
+        <div id="pause-menu" class="hidden">
+            <div id="pause-panel">
+                <h2>Pause</h2>
+                <button class="menu-btn" id="btn-resume">Reprendre</button>
+                <button class="menu-btn" id="btn-save">Sauvegarder</button>
+                <button class="menu-btn" id="btn-load">Charger</button>
+                <button class="menu-btn" id="btn-quit">Quitter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+/* ==========================================================================
+   LE DERNIER PHARE - Title Screen
+   Title screen layout, fog, lighthouse silhouette, menu buttons
+   ========================================================================== */
+
+/* ---------- Title Screen Container ---------- */
+#title-screen {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-loading);
+  background: linear-gradient(
+    180deg,
+    #0e1018 0%,
+    #0a0c14 30%,
+    #080a10 60%,
+    #06080c 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ---------- Title Fog ---------- */
+.title-fog {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
+  background:
+    radial-gradient(ellipse 100% 60% at 30% 70%,
+      rgba(160, 160, 176, 0.07) 0%,
+      transparent 60%),
+    radial-gradient(ellipse 70% 80% at 70% 40%,
+      rgba(140, 150, 170, 0.05) 0%,
+      transparent 55%),
+    radial-gradient(ellipse 120% 40% at 50% 90%,
+      rgba(120, 130, 160, 0.06) 0%,
+      transparent 50%);
+  animation: titleFogDrift 30s ease-in-out infinite alternate;
+}
+
+@keyframes titleFogDrift {
+  0% {
+    background-position: 0% 0%, 100% 50%, 50% 100%;
+    opacity: 0.35;
+  }
+  33% {
+    background-position: 20% 30%, 80% 20%, 40% 70%;
+    opacity: 0.45;
+  }
+  66% {
+    background-position: 40% 60%, 60% 80%, 20% 40%;
+    opacity: 0.38;
+  }
+  100% {
+    background-position: 60% 40%, 30% 60%, 70% 20%;
+    opacity: 0.42;
+  }
+}
+
+/* ---------- Title Content ---------- */
+.title-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-main {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 6vw, var(--fs-display));
+  font-weight: 700;
+  color: var(--bone-bright);
+  letter-spacing: var(--ls-widest);
+  text-shadow:
+    0 0 40px rgba(196, 148, 58, 0.25),
+    0 0 80px rgba(196, 148, 58, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  line-height: var(--lh-tight);
+}
+
+.title-subtitle {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--fog-dim);
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-3xl);
+  letter-spacing: var(--ls-wide);
+  opacity: 0.8;
+}
+
+/* ---------- Title Menu ---------- */
+.title-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-width: 250px;
+}
+
+.title-btn {
+  padding: var(--space-md) var(--space-xl);
+  background: transparent;
+  border: 1px solid var(--border-medium);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
+  color: var(--bone);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+}
+
+.title-btn:hover {
+  background: rgba(196, 148, 58, 0.1);
+  border-color: var(--amber-dim);
+  color: var(--amber);
+  text-shadow: 0 0 12px rgba(196, 148, 58, 0.2);
+}
+
+.title-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ---------- Lighthouse Silhouette ---------- */
+.title-lighthouse {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 280px;
+  z-index: 1;
+  opacity: 0.15;
+}
+
+.title-lighthouse::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 280px;
+  background: var(--bg-light);
+  clip-path: polygon(
+    35% 0%,
+    65% 0%,
+    68% 8%,
+    32% 8%,
+    30% 10%,
+    70% 10%,
+    72% 12%,
+    28% 12%,
+    38% 85%,
+    62% 85%,
+    70% 100%,
+    30% 100%
+  );
+}
+
+.title-lighthouse::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--amber-dim);
+  box-shadow:
+    0 0 20px rgba(196, 148, 58, 0.2),
+    0 0 60px rgba(196, 148, 58, 0.08);
+  animation: lighthouseGlow 4s ease-in-out infinite;
+}
+
+@keyframes lighthouseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    box-shadow:
+      0 0 20px rgba(196, 148, 58, 0.15),
+      0 0 60px rgba(196, 148, 58, 0.05);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow:
+      0 0 30px rgba(196, 148, 58, 0.3),
+      0 0 80px rgba(196, 148, 58, 0.1);
+  }
+}

@@ -1,0 +1,86 @@
+/* ==========================================================================
+   LE DERNIER PHARE - Dialogue System
+   Dialogue box, speaker, text, choices
+   ========================================================================== */
+
+/* ---------- Dialogue Box ---------- */
+#dialogue-box {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 40vh;
+  background: rgba(18, 19, 26, 0.95);
+  border-top: 1px solid var(--border-medium);
+  z-index: var(--z-dialogue);
+  padding: var(--space-xl);
+  transform: translateY(0);
+  transition: transform 300ms ease;
+}
+
+#dialogue-box.hidden {
+  display: block !important;
+  transform: translateY(100%);
+  pointer-events: none;
+}
+
+/* ---------- Speaker Header ---------- */
+#dialogue-header {
+  margin-bottom: var(--space-md);
+}
+
+#dialogue-speaker {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--amber);
+  letter-spacing: var(--ls-wide);
+}
+
+/* ---------- Dialogue Text ---------- */
+#dialogue-text {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--fog-white);
+  line-height: var(--lh-relaxed);
+  font-size: var(--fs-base);
+  min-height: 60px;
+  cursor: pointer;
+  padding-bottom: var(--space-sm);
+}
+
+/* ---------- Choices ---------- */
+#dialogue-choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.dialogue-choice {
+  text-align: left;
+  padding: var(--space-sm) var(--space-lg);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid transparent;
+  border-radius: var(--border-radius-sm);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  line-height: var(--lh-normal);
+}
+
+.dialogue-choice:hover {
+  background: var(--bg-medium);
+  border-left-color: var(--amber);
+  color: var(--bone);
+}
+
+.dialogue-choice.disabled,
+.dialogue-choice:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
