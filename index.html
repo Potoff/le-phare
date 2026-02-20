@@ -64,37 +64,66 @@
                     <h4>Actions</h4>
                     <div id="action-buttons"></div>
                 </div>
+                <div id="night-preview" class="panel-section hidden">
+                    <h4>Cette nuit</h4>
+                    <div id="night-costs"></div>
+                </div>
             </aside>
         </main>
 
         <!-- HUD en bas -->
         <footer id="hud">
-            <div class="resource-bar" id="oil-bar">
-                <span class="resource-icon" title="Huile">&#128367;</span>
-                <div class="resource-track">
-                    <div class="resource-fill" id="oil-fill"></div>
+            <!-- Ressources -->
+            <div class="hud-resources">
+                <div class="resource-bar" id="oil-bar">
+                    <span class="resource-icon" title="Huile — alimente le phare chaque nuit">🕯️</span>
+                    <div class="resource-track">
+                        <div class="resource-fill" id="oil-fill"></div>
+                    </div>
+                    <span class="resource-value"><span id="oil-value">12</span><span class="resource-max">/20</span></span>
                 </div>
-                <span class="resource-value" id="oil-value">12</span>
-            </div>
-            <div class="resource-bar" id="food-bar">
-                <span class="resource-icon" title="Nourriture">&#127838;</span>
-                <div class="resource-track">
-                    <div class="resource-fill" id="food-fill"></div>
+                <div class="resource-bar" id="food-bar">
+                    <span class="resource-icon" title="Nourriture — consommée chaque nuit par vous et les survivants">🍖</span>
+                    <div class="resource-track">
+                        <div class="resource-fill" id="food-fill"></div>
+                    </div>
+                    <span class="resource-value"><span id="food-value">8</span><span class="resource-max">/15</span></span>
                 </div>
-                <span class="resource-value" id="food-value">8</span>
-            </div>
-            <div class="resource-bar" id="sanity-bar">
-                <span class="resource-icon" title="Sante mentale">&#128065;</span>
-                <div class="resource-track">
-                    <div class="resource-fill" id="sanity-fill"></div>
+                <div class="resource-bar" id="sanity-bar">
+                    <span class="resource-icon" title="Santé mentale — le phare éteint et la faim la réduisent">👁️</span>
+                    <div class="resource-track">
+                        <div class="resource-fill" id="sanity-fill"></div>
+                    </div>
+                    <span class="resource-value"><span id="sanity-value">100</span><span class="resource-max">%</span></span>
                 </div>
-                <span class="resource-value" id="sanity-value">100</span>
             </div>
+
+            <!-- Statut central -->
+            <div id="hud-status">
+                <div id="lighthouse-status" title="État du phare cette nuit">
+                    <span id="lighthouse-icon">🔦</span>
+                    <span id="lighthouse-label">Phare</span>
+                </div>
+                <div id="npc-status" title="Survivants au phare">
+                    <span id="npc-icon">👤</span>
+                    <span id="npc-count">0</span>
+                </div>
+            </div>
+
+            <!-- Temps et actions -->
             <div id="time-display">
                 <span id="day-display">Jour 1</span>
                 <span id="phase-display">Aube</span>
-                <span id="moves-display">Deplacements : 5</span>
+                <div id="moves-bar">
+                    <span id="moves-display">6 déplacements</span>
+                    <div id="moves-pips"></div>
+                </div>
             </div>
+
+            <!-- Bouton fin de journée -->
+            <button id="btn-end-day" class="hud-action-btn hidden" title="Terminer la journée et passer au crépuscule">
+                Terminer le jour
+            </button>
         </footer>
 
         <!-- Boite de dialogue -->

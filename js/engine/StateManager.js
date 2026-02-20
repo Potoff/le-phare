@@ -69,6 +69,9 @@ export class StateManager {
         this._state.act = Math.min(5, this._state.act + 1);
         this._state.turn = 0; this._state.phase = "dawn";
         break; }
+      case 'SET_LIGHTHOUSE_NIGHT': {
+        this._state.lighthouseLit = [...this._state.lighthouseLit, payload.lit];
+        break; }
       case 'SET_GAME_OVER': {
         this._state.gameOver = true;
         if (payload && payload.reason) this._state.gameOverReason = payload.reason;

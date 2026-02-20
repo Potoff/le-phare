@@ -178,13 +178,22 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 72px;
   min-height: 72px;
-  padding: 0 var(--space-lg);
-  gap: var(--space-lg);
+  padding: 0 var(--space-md);
+  gap: var(--space-md);
   background-color: var(--bg-dark);
   border-top: 1px solid var(--border-medium);
   z-index: var(--z-hud);
+  flex-wrap: wrap;
+}
+
+/* --- Groupe ressources --- */
+.hud-resources {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 160px;
 }
 
 .resource-bar {
@@ -192,22 +201,24 @@
   flex-direction: row;
   align-items: center;
   gap: var(--space-sm);
-  min-width: 140px;
 }
 
 .resource-icon {
-  font-size: 1.2em;
+  font-size: 1em;
   line-height: 1;
-  filter: grayscale(0.2);
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .resource-track {
   flex: 1;
-  height: 8px;
+  height: 7px;
   background-color: var(--bg-medium);
   border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border-subtle);
+  min-width: 60px;
 }
 
 .resource-fill {
@@ -245,18 +256,55 @@
 
 .resource-value {
   font-family: var(--font-mono);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
   color: var(--text-secondary);
-  min-width: 32px;
+  min-width: 44px;
   text-align: right;
+  white-space: nowrap;
 }
 
+.resource-max {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* --- Statut central --- */
+#hud-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0 var(--space-sm);
+}
+
+#lighthouse-status,
+#npc-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+
+#lighthouse-icon,
+#npc-icon {
+  font-size: 1em;
+}
+
+#lighthouse-status.lit #lighthouse-icon {
+  filter: drop-shadow(0 0 4px var(--amber));
+}
+
+#lighthouse-status.dark {
+  opacity: 0.45;
+}
+
+/* --- Temps et déplacements --- */
 #time-display {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 2px;
-  margin-left: auto;
+  gap: 4px;
 }
 
 #day-display {
@@ -264,6 +312,7 @@
   font-size: var(--fs-lg);
   font-weight: 600;
   color: var(--amber);
+  line-height: 1;
 }
 
 #phase-display {
@@ -273,10 +322,92 @@
   letter-spacing: var(--ls-wide);
 }
 
+#moves-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
 #moves-display {
   color: var(--text-muted);
   font-size: var(--fs-xs);
 }
+
+#moves-pips {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+
+.moves-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--amber);
+  transition: background-color 300ms ease, opacity 300ms ease;
+}
+
+.moves-pip.used {
+  background-color: var(--bg-medium);
+  opacity: 0.4;
+}
+
+/* --- Bouton fin de journée --- */
+.hud-action-btn {
+  padding: var(--space-sm) var(--space-md);
+  min-height: 44px;
+  background-color: transparent;
+  border: 1px solid var(--amber-dim);
+  border-radius: var(--border-radius-md);
+  color: var(--amber);
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  touch-action: manipulation;
+  flex-shrink: 0;
+}
+
+.hud-action-btn:hover {
+  background-color: rgba(196, 148, 58, 0.12);
+  border-color: var(--amber);
+}
+
+.hud-action-btn.pulse {
+  animation: btnPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+  0%, 100% { border-color: var(--amber-dim); box-shadow: none; }
+  50% { border-color: var(--amber); box-shadow: 0 0 10px rgba(196, 148, 58, 0.3); }
+}
+
+/* --- Panneau prévisualisation nuit --- */
+#night-preview h4 {
+  font-family: var(--font-heading);
+  font-size: var(--fs-sm);
+  color: var(--bone-dim);
+  margin-bottom: var(--space-sm);
+  letter-spacing: var(--ls-wide);
+}
+
+#night-costs {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.night-cost-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-sm);
+}
+
+.night-cost-ok    { color: var(--sea-green); }
+.night-cost-warn  { color: var(--amber); }
+.night-cost-crit  { color: var(--blood-bright); }
 
 /* ---------- Journal Overlay ---------- */
 #journal-overlay {

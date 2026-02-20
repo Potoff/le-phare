@@ -35,11 +35,29 @@ Jeu de plateau narratif solo en navigateur. Le joueur incarne un gardien de phar
 - [x] Journal du joueur
 - [x] Menu pause
 
-### Phase 2 : Temps, Ressources et HUD (A FAIRE)
-- [ ] TimeManager module dedie (gestion fine des phases, minuteries)
-- [ ] ResourceManager module dedie (regles de consommation, rarete progressive)
-- [ ] Amelioration du HUD (indicateurs visuels plus riches, mini-carte?)
-- [ ] Equilibrage des ressources par acte
+### Phase 2 : Temps, Ressources et HUD (TERMINEE)
+- [x] TimeManager module dedie (js/systems/TimeManager.js)
+  - Mouvements par acte : 6, 6, 7, 7, 8
+  - Transitions propres avec callbacks injectes depuis main.js
+  - Textes de transition uniques par acte
+- [x] ResourceManager module dedie (js/systems/ResourceManager.js)
+  - Couts huile progressifs par acte : 3, 3, 4, 4, 5
+  - Calcul nourriture : joueur + NPCs vivants
+  - Penalites sante mentale (nuit sans phare, faim, actes tardifs)
+  - Methode getWarnings() pour alertes anticipees
+  - Methode checkGameOver() (sanite = 0)
+- [x] TutorialSystem (js/systems/TutorialSystem.js)
+  - Hints contextuels non-intrusifs (ton narratif)
+  - Se declenchent sur : premier deplacement, premier loot, seuils critiques, etc.
+  - Desactivable via flag tutorial_disabled
+- [x] HUD enrichi
+  - Valeurs max affichees (ex : 12/20)
+  - Pips de deplacements (pastilles pleines/vides)
+  - Statut phare (allume/eteint/neutre)
+  - Compteur NPCs au phare
+  - Bouton "Terminer le jour" (pulse quand deplacements = 0)
+  - Panneau "Cette nuit" dans le side panel (preview couts)
+- [x] Equilibrage des ressources par acte (progressif)
 
 ### Phase 3 : Dialogues et systeme narratif (A FAIRE)
 - [ ] DialogueEngine module dedie (arbre de dialogues, conditions)
