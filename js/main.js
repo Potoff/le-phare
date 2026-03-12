@@ -102,6 +102,16 @@ class Game {
             }
         });
 
+        // Mobile: side panel toggle
+        const panelToggle = document.getElementById('mobile-panel-toggle');
+        const sidePanel = document.getElementById('side-panel');
+        if (panelToggle && sidePanel) {
+            panelToggle.addEventListener('click', () => {
+                sidePanel.classList.toggle('mobile-open');
+                panelToggle.classList.toggle('open');
+            });
+        }
+
         // Menu pause
         document.getElementById('btn-resume').addEventListener('click', () => this.togglePauseMenu());
         document.getElementById('btn-save').addEventListener('click', () => this.saveGame());

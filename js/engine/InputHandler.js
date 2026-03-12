@@ -41,6 +41,16 @@ export class InputHandler {
     this._canvas.addEventListener('contextmenu', e => e.preventDefault());
     this._onKeyDown = this._handleKeyDown.bind(this);
     document.addEventListener('keydown', this._onKeyDown);
+
+    // Touch events for mobile
+    this._onTouchStart = this._handleTouchStart.bind(this);
+    this._onTouchMove = this._handleTouchMove.bind(this);
+    this._onTouchEnd = this._handleTouchEnd.bind(this);
+    this._canvas.addEventListener('touchstart', this._onTouchStart, { passive: false });
+    this._canvas.addEventListener('touchmove', this._onTouchMove, { passive: false });
+    this._canvas.addEventListener('touchend', this._onTouchEnd, { passive: false });
+    this._lastPinchDist = 0;
+    this._touchStartTime = 0;
   }
 
   _handleMouseDown(e) {
@@ -95,6 +105,84 @@ export class InputHandler {
     }
   }
 
+  /* ---------- Touch handlers (mobile) ---------- */
+
+  _handleTouchStart(e) {
+    e.preventDefault();
+    if (e.touches.length === 1) {
+      const t = e.touches[0];
+      this.isDragging = true;
+      this._dragMoved = false;
+      this._dragStart = { x: t.clientX, y: t.clientY };
+      this._dragViewStart = { x: this.viewOffset.x, y: this.viewOffset.y };
+      this._touchStartTime = Date.now();
+    } else if (e.touches.length === 2) {
+      this.isDragging = false;
+      this._lastPinchDist = this._pinchDistance(e.touches);
+    }
+  }
+
+  _handleTouchMove(e) {
+    e.preventDefault();
+    if (e.touches.length === 1 && this.isDragging) {
+      const t = e.touches[0];
+      const dx = t.clientX - this._dragStart.x;
+      const dy = t.clientY - this._dragStart.y;
+      if (!this._dragMoved && (Math.abs(dx) > this._dragThreshold || Math.abs(dy) > this._dragThreshold))
+        this._dragMoved = true;
+      if (this._dragMoved) {
+        this.viewOffset.x = this._dragViewStart.x + dx;
+        this.viewOffset.y = this._dragViewStart.y + dy;
+      }
+    } else if (e.touches.length === 2) {
+      const dist = this._pinchDistance(e.touches);
+      if (this._lastPinchDist > 0) {
+        const scale = dist / this._lastPinchDist;
+        const midX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const midY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const rect = this._canvas.getBoundingClientRect();
+        const mx = midX - rect.left, my = midY - rect.top;
+        const oldZoom = this.zoom;
+        const newZoom = Math.max(0.3, Math.min(3, this.zoom * scale));
+        const s = newZoom / oldZoom;
+        this.viewOffset.x = mx - s * (mx - this.viewOffset.x);
+        this.viewOffset.y = my - s * (my - this.viewOffset.y);
+        this.zoom = newZoom;
+      }
+      this._lastPinchDist = dist;
+    }
+  }
+
+  _handleTouchEnd(e) {
+    if (e.touches.length === 0) {
+      if (!this._dragMoved && (Date.now() - this._touchStartTime) < 300) {
+        // Tap -> treat as click
+        const rect = this._canvas.getBoundingClientRect();
+        const hex = this.pixelToHex(
+          this._dragStart.x - rect.left,
+          this._dragStart.y - rect.top
+        );
+        if (hex && this._onHexClick) this._onHexClick(hex);
+      }
+      this.isDragging = false;
+      this._lastPinchDist = 0;
+    } else if (e.touches.length === 1) {
+      // Went from pinch to single finger - reset drag
+      const t = e.touches[0];
+      this.isDragging = true;
+      this._dragMoved = false;
+      this._dragStart = { x: t.clientX, y: t.clientY };
+      this._dragViewStart = { x: this.viewOffset.x, y: this.viewOffset.y };
+      this._lastPinchDist = 0;
+    }
+  }
+
+  _pinchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
   /**
    * Convertit pixel ecran -> coordonnees axiales hexagonales (pointy-top).
    * @param {number} px
@@ -136,6 +224,9 @@ export class InputHandler {
     this._canvas.removeEventListener('mouseup', this._onMouseUp);
     this._canvas.removeEventListener('wheel', this._onWheel);
     this._canvas.removeEventListener('click', this._onClick);
+    this._canvas.removeEventListener('touchstart', this._onTouchStart);
+    this._canvas.removeEventListener('touchmove', this._onTouchMove);
+    this._canvas.removeEventListener('touchend', this._onTouchEnd);
     document.removeEventListener('keydown', this._onKeyDown);
   }
 }

@@ -1,0 +1,221 @@
+/* ==========================================================================
+   LE DERNIER PHARE - Mobile Responsive
+   Adaptations pour écrans tactiles et petits écrans
+   ========================================================================== */
+
+/* Prevent pull-to-refresh and overscroll on mobile */
+html, body {
+  overscroll-behavior: none;
+}
+
+/* ---- Small screens (< 768px) ---- */
+@media (max-width: 768px) {
+
+  /* Game area: stack vertically, hide side panel by default */
+  #game-area {
+    flex-direction: column;
+  }
+
+  #side-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    min-width: unset;
+    max-height: 45vh;
+    border-left: none;
+    border-top: 1px solid var(--border-medium);
+    transform: translateY(100%);
+    transition: transform 300ms ease;
+    z-index: calc(var(--z-panel) + 5);
+    overflow-y: auto;
+  }
+
+  #side-panel.mobile-open {
+    transform: translateY(0);
+  }
+
+  /* Board takes full space */
+  #board-container {
+    flex: 1;
+    width: 100%;
+  }
+
+  /* HUD: reflow for small screens */
+  #hud {
+    flex-wrap: wrap;
+    padding: var(--space-xs) var(--space-sm);
+    gap: var(--space-xs);
+    min-height: auto;
+  }
+
+  .hud-resources {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    min-width: unset;
+  }
+
+  .resource-bar {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .resource-value {
+    min-width: 36px;
+    font-size: 0.7rem;
+  }
+
+  .resource-max {
+    display: none;
+  }
+
+  #time-display {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  #day-display {
+    font-size: var(--fs-md);
+  }
+
+  #moves-bar {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  #moves-display {
+    display: none;
+  }
+
+  .hud-action-btn {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: var(--fs-xs);
+    min-height: 36px;
+  }
+
+  /* Top bar compact */
+  #top-bar {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 var(--space-sm);
+  }
+
+  #game-title {
+    font-size: var(--fs-sm);
+  }
+
+  /* Notifications: full width */
+  #notification-container {
+    left: var(--space-sm);
+    right: var(--space-sm);
+    top: 48px;
+  }
+
+  .notification {
+    max-width: 100%;
+  }
+
+  /* Journal: full screen on mobile */
+  #journal-panel {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  /* Pause menu buttons */
+  .menu-btn {
+    min-width: 180px;
+    font-size: var(--fs-sm);
+  }
+
+  /* Dialogue box */
+  #dialogue-box {
+    left: var(--space-sm) !important;
+    right: var(--space-sm) !important;
+    bottom: 80px !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ---- Very small screens (< 480px) ---- */
+@media (max-width: 480px) {
+
+  .hud-resources {
+    flex-direction: column;
+  }
+
+  .resource-bar {
+    min-width: unset;
+  }
+
+  #hud-status {
+    flex-direction: row;
+    gap: var(--space-sm);
+  }
+
+  .moves-pip {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* ---- Touch-friendly tap targets ---- */
+@media (pointer: coarse) {
+  .icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #action-buttons button {
+    min-height: 44px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .menu-btn {
+    min-height: 48px;
+  }
+
+  .title-btn {
+    min-height: 48px;
+    padding: var(--space-md) var(--space-xl);
+  }
+}
+
+/* ---- Mobile side panel toggle button ---- */
+#mobile-panel-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #mobile-panel-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 80px;
+    right: var(--space-sm);
+    width: 44px;
+    height: 44px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-medium);
+    border-radius: 50%;
+    color: var(--amber);
+    font-size: var(--fs-lg);
+    z-index: calc(var(--z-panel) + 6);
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: transform 200ms ease;
+  }
+
+  #mobile-panel-toggle.open {
+    transform: rotate(180deg);
+  }
+}
